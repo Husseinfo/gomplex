@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+
+message Complex {
+    float real = 1;
+    float imaginary = 2;
+}
+
+service Complex {
+
+    rpc InvertSign (Complex) returns (Complex) {
+    }
+
+    rpc Add (stream Complex) returns (Complex) {
+    }
+
+    rpc Sub (stream Complex) returns (Complex) {
+    }
+
+}
