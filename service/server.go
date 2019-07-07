@@ -4,6 +4,7 @@ import (
 	"context"
 	"goahead/core"
 	"goahead/data"
+	"io"
 )
 
 func (m ComplexNumber) ToComplexNumberDataType() data.ComplexNumber {
@@ -20,45 +21,55 @@ func FromComplexNumberDataType(number data.ComplexNumber) ComplexNumber {
 	}
 }
 
-type complexNumberServer struct {
+type ComplexNumberServer struct {
 }
 
-func (s *complexNumberServer) AddComplex(ctx context.Context, numbers ...*ComplexNumber) (*ComplexNumber, error) {
+func (s *ComplexNumberServer) Add(stream Complex_AddServer) error {
 	sum := data.ComplexNumber{
 		Real:      0,
 		Imaginary: 0,
 	}
 
-	for _, number := range numbers {
+	for {
+		number, err := stream.Recv()
+		if err == io.EOF {
+			res := FromComplexNumberDataType(sum)
+			_error := stream.SendAndClose(&res)
+			if _error != nil {
+				panic(_error)
+			}
+		}
+
 		sum = core.AddComplex(sum, number.ToComplexNumberDataType())
 	}
-
-	res := FromComplexNumberDataType(sum)
-	return &res, nil
 }
 
-func (s *complexNumberServer) SubComplex(ctx context.Context, numbers ...*ComplexNumber) (*ComplexNumber, error) {
+func (s *ComplexNumberServer) Sub(stream Complex_SubServer) error {
 	sum := data.ComplexNumber{
 		Real:      0,
 		Imaginary: 0,
 	}
 
-	for _, number := range numbers {
+	for {
+		number, err := stream.Recv()
+		if err == io.EOF {
+			res := FromComplexNumberDataType(sum)
+			_error := stream.SendAndClose(&res)
+			if _error != nil {
+				panic(_error)
+			}
+		}
+
 		sum = core.SubComplex(sum, number.ToComplexNumberDataType())
 	}
-
-	return &ComplexNumber{
-		Real:      sum.Real,
-		Imaginary: sum.Imaginary,
-	}, nil
 }
 
-func (s *complexNumberServer) InvertSign(ctx context.Context, number *ComplexNumber) (*ComplexNumber, error) {
+func (s *ComplexNumberServer) InvertSign(ctx context.Context, number *ComplexNumber) (*ComplexNumber, error) {
 	x := FromComplexNumberDataType(number.ToComplexNumberDataType().ToInvertedSign())
 	return &x, nil
 }
 
-func (s *complexNumberServer) GetType(ctx context.Context, number *ComplexNumber) (*NumberType, error) {
+func (s *ComplexNumberServer) Type(ctx context.Context, number *ComplexNumber) (*NumberType, error) {
 	x := NumberType_State(number.ToComplexNumberDataType().GetType())
 	return &NumberType{
 		Type: x,
