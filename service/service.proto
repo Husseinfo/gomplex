@@ -6,6 +6,7 @@ message NumberType {
         Imaginary = 1;
         Complex = 2;
     }
+    State type = 1;
 }
 
 message ComplexNumber {
