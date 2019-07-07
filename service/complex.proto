@@ -1,20 +1,29 @@
 syntax = "proto3";
 
+message NumberType {
+    enum State {
+        Real = 0;
+        Imaginary = 1;
+        Complex = 2;
+    }
+}
 
-message Complex {
+message ComplexNumber {
     float real = 1;
     float imaginary = 2;
 }
 
 service Complex {
 
-    rpc InvertSign (Complex) returns (Complex) {
+    rpc InvertSign (ComplexNumber) returns (ComplexNumber) {
     }
 
-    rpc Add (stream Complex) returns (Complex) {
+    rpc Add (stream ComplexNumber) returns (ComplexNumber) {
     }
 
-    rpc Sub (stream Complex) returns (Complex) {
+    rpc Sub (stream ComplexNumber) returns (ComplexNumber) {
     }
 
+    rpc Type (ComplexNumber) returns (NumberType) {
+    }
 }

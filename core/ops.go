@@ -2,13 +2,13 @@ package core
 
 import "goahead/data"
 
-func AddComplex(x data.Complex, y data.Complex) data.Complex {
-	return data.Complex{
+func AddComplex(x data.ComplexNumber, y data.ComplexNumber) data.ComplexNumber {
+	return data.ComplexNumber{
 		Real:      x.Real + y.Real,
 		Imaginary: x.Imaginary + y.Imaginary,
 	}
 }
 
-func SubComplex(x data.Complex, y data.Complex) data.Complex {
+func SubComplex(x data.ComplexNumber, y data.ComplexNumber) data.ComplexNumber {
 	return AddComplex(x, y.ToInvertedSign())
 }

@@ -7,12 +7,12 @@ import (
 )
 
 func TestAddComplex(t *testing.T) {
-	x := data.Complex{
+	x := data.ComplexNumber{
 		Real:      2,
 		Imaginary: 3,
 	}
 
-	y := data.Complex{
+	y := data.ComplexNumber{
 		Real:      -1,
 		Imaginary: 2,
 	}
@@ -29,12 +29,12 @@ func TestAddComplex(t *testing.T) {
 }
 
 func TestSubComplex(t *testing.T) {
-	x := data.Complex{
+	x := data.ComplexNumber{
 		Real:      2,
 		Imaginary: 3,
 	}
 
-	y := data.Complex{
+	y := data.ComplexNumber{
 		Real:      -1,
 		Imaginary: 2,
 	}
