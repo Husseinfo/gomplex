@@ -1,0 +1,2 @@
+FROM golang:rc-apline
+

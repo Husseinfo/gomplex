@@ -5,6 +5,7 @@ import (
 	"goahead/core"
 	"goahead/data"
 	"io"
+	"log"
 )
 
 func (m ComplexNumber) ToComplexNumberDataType() data.ComplexNumber {
@@ -31,36 +32,47 @@ func (s *ComplexNumberServer) Add(stream Complex_AddServer) error {
 	}
 
 	for {
-		number, err := stream.Recv()
+		in, err := stream.Recv()
 		if err == io.EOF {
 			res := FromComplexNumberDataType(sum)
-			_error := stream.SendAndClose(&res)
-			if _error != nil {
-				panic(_error)
+			err = stream.SendAndClose(&res)
+			if err != nil {
+				panic(err)
 			}
+			return nil
 		}
-
-		sum = core.AddComplex(sum, number.ToComplexNumberDataType())
+		if err != nil {
+			return err
+		}
+		number := in.ToComplexNumberDataType()
+		sum = core.AddComplex(sum, number)
+		log.Printf("Received %v for addition", number)
+		log.Printf("Current Sum is %v", sum)
 	}
 }
 
 func (s *ComplexNumberServer) Sub(stream Complex_SubServer) error {
-	sum := data.ComplexNumber{
-		Real:      0,
-		Imaginary: 0,
-	}
+	first, _ := stream.Recv()
+	sum := first.ToComplexNumberDataType()
 
 	for {
-		number, err := stream.Recv()
+		in, err := stream.Recv()
 		if err == io.EOF {
 			res := FromComplexNumberDataType(sum)
-			_error := stream.SendAndClose(&res)
-			if _error != nil {
-				panic(_error)
+			err = stream.SendAndClose(&res)
+			if err != nil {
+				panic(err)
 			}
+			return nil
+		}
+		if err != nil {
+			return err
 		}
 
-		sum = core.SubComplex(sum, number.ToComplexNumberDataType())
+		number := in.ToComplexNumberDataType()
+		sum = core.SubComplex(sum, number)
+		log.Printf("Received %v for substraction", number)
+		log.Printf("Current Sum is %v", sum)
 	}
 }
 
