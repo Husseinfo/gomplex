@@ -1,0 +1,7 @@
+version: "3"
+services:
+  gomplex:
+    image: gomplex
+    build: .
+    ports:
+      - "8000:8000"

@@ -1,7 +1,7 @@
 package core
 
 import (
-	"goahead/data"
+	"gomplex/data"
 )
 
 func AddComplex(x data.ComplexNumber, y data.ComplexNumber) data.ComplexNumber {

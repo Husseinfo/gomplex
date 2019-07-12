@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"goahead/service"
+	"gomplex/service"
 	"google.golang.org/grpc"
 	"log"
 )

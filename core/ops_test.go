@@ -1,8 +1,8 @@
 package core_test
 
 import (
-	"goahead/core"
-	"goahead/data"
+	"gomplex/core"
+	"gomplex/data"
 	"testing"
 )
 

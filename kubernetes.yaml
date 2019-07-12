@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: pod
+metadata:
+  name: gomplex
+  spec:
+    containers:
+      - name: gomplex-service
+        image: gomplex:latest
+        imagePullPolicy: Always # CD
+  containerPort: 8000

@@ -9,6 +9,20 @@
 ### Generate gRPC code in GO
 `protoc -I service service/complex.proto --go_out=plugins=grpc:service`
 
+### Build & run
+`$ go build app/`
+
+`$ ./app`
+
+### Docker
+Via docker cli
+`$ docker run gomplex`
+
+Via docker compose `$ docker-compose up`
+
+
+### Kubernetes
+
 ## Clients
 
 ### Go client
@@ -29,7 +43,7 @@ is Complex
 
 #### Installation
 ##### Install requirements
-`$ pip3 install grpcio grpcio-tools`
+`$ pip3 install -r requirements.txt`
 
 ##### Generate gRPC code
 `$ python3 -m grpc_tools.protoc -Iservice --python_out=clients/ --grpc_python_out=clients/ service/service.proto`
@@ -37,3 +51,6 @@ is Complex
 #### Running example
 `$ python3 clients/client.py --number 1+j --number 2-3j`
 `$ python3 clients/client.py  --number 2-j --number=-1-4j --subtraction`
+
+
+## TO-DO

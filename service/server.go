@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"goahead/core"
-	"goahead/data"
+	"gomplex/core"
+	"gomplex/data"
 	"io"
 	"log"
 )
@@ -36,6 +36,7 @@ func (s *ComplexNumberServer) Add(stream Complex_AddServer) error {
 		if err == io.EOF {
 			res := FromComplexNumberDataType(sum)
 			err = stream.SendAndClose(&res)
+			log.Printf("Final sum is %v", sum)
 			if err != nil {
 				panic(err)
 			}
@@ -54,12 +55,14 @@ func (s *ComplexNumberServer) Add(stream Complex_AddServer) error {
 func (s *ComplexNumberServer) Sub(stream Complex_SubServer) error {
 	first, _ := stream.Recv()
 	sum := first.ToComplexNumberDataType()
+	log.Printf("Received %v for substraction", sum)
 
 	for {
 		in, err := stream.Recv()
 		if err == io.EOF {
 			res := FromComplexNumberDataType(sum)
 			err = stream.SendAndClose(&res)
+			log.Printf("Final sum is %v", sum)
 			if err != nil {
 				panic(err)
 			}
